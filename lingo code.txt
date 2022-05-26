@@ -1,0 +1,211 @@
+
+!note that t/g/c represents tucson/glendale/chandler locations
+t2 stands for tucson month 2
+tt stands for a set from tucson
+Tinv stands for product inventory at end of month 1
+td stands for consumption in month 1 from tuscon of each product;
+
+Sets:
+
+Loc1/Chandler/: SetTime1,SetCapacity1;
+Loc2/Glendale/: SetTime2,SetCapacity2;
+Loc3/Tucson/: SetTime3,SetCapacity3;
+Set/SteelMetal,SteelInsert,GraphiteMetal,GraphiteInsert/: SetExpensesChandler,SetExpensesGlendale,SetExpensesTucson,SetRevenueChandler,SetRevenueGlendale,SetRevenueTucson,SetMinProductChandler,SetMinProductGlendale,SetMinProductTucson,SetMaxProductChandler,SetMaxProductGlendale,SetMaxProductTucson,SetExpensesChandlerM2,SetExpensesGlendaleM2,SetExpensesTucsonM2,SetGraphiteCap,SetLaborTimeTucson,SetMachineTimeTucson,SetLaborTimeGlendale,SetMachineTimeGlendale,SetLaborTimeChandler,SetMachineTimeChandler;
+Product/SteelShaft,GraphiteShaft,ForgedIronHead,MetalWoodHead,TitaniumInsertHead/: ExpensesChandler,ExpensesGlendale,ExpensesTucson,RevenueChandler,RevenueGlendale,RevenueTucson,MinDemandChandler,MinDemandGlendale,MinDemandTucson,MaxDemandChandler,MaxDemandGlendale,MaxDemandTucson,TucsonLaborTime,TucsonMachineTime,TucsonAdvertisingCost,GlendaleLaborTime,GlendaleMachineTime,GlendaleAdvertisingCost,ChandlerLaborTime,ChandlerMachineTime,ChandlerAdvertisingCost,ExpensesChandlerM2,ExpensesGlendaleM2,ExpensesTucsonM2,GraphiteCap;
+Links3(Loc3,Product): T,T2,Tinv,TD;
+Links2(Loc2,Product): G,G2,Ginv,GD;
+Links1(loc1,Product): C,C2,Cinv,CD;
+Links6(Loc3,Set): TT,TT2;
+Links5(Loc2,Set): GG,GG2;
+Links4(Loc1,Set): CC,CC2;
+ENDSETS
+!integer;
+@for(product(k): @gin(c(1,k)));
+@for(product(k): @gin(c2(1,k)));
+@for(product(k): @gin(g(1,k)));
+@for(product(k): @gin(g2(1,k)));
+@for(product(k): @gin(t(1,k)));
+@for(product(k): @gin(t2(1,k)));
+@for(set(i): @gin(cc(1,i)));
+@for(set(i): @gin(cc2(1,i)));
+@for(set(i): @gin(gg(1,i)));
+@for(set(i): @gin(gg2(1,i)));
+@for(set(i): @gin(tt(1,i)));
+@for(set(i): @gin(tt2(1,i)));
+
+@for(product(k): @gin(cd(1,k)));
+@for(product(k): @gin(gd(1,k)));
+@for(product(k): @gin(td(1,k)));
+
+
+data:
+ExpensesChandler = @OLE('ORProjectData.xlsx','ExpensesChandler');
+ExpensesGlendale = @OLE('ORProjectData.xlsx','ExpensesGlendale');
+ExpensesTucson = @OLE('ORProjectData.xlsx','ExpensesTucson');
+RevenueChandler = @OLE('ORProjectData.xlsx','RevenueChandler');
+RevenueGlendale = @OLE('ORProjectData.xlsx','RevenueGlendale');
+RevenueTucson = @OLE('ORProjectData.xlsx','RevenueTucson');
+MinDemandChandler = @OLE('ORProjectData.xlsx','MinDemandChandler');
+MinDemandGlendale = @OLE('ORProjectData.xlsx','MinDemandGlendale');
+MinDemandTucson = @OLE('ORProjectData.xlsx','MinDemandTucson');
+MaxDemandChandler = @OLE('ORProjectData.xlsx','MaxDemandChandler');
+MaxDemandGlendale = @OLE('ORProjectData.xlsx','MaxDemandGlendale');
+MaxDemandTucson = @OLE('ORProjectData.xlsx','MaxDemandTucson');
+SetTime1 = @OLE('ORProjectData.xlsx','SetTime1');
+SetTime2 = @OLE('ORProjectData.xlsx','SetTime2');
+SetTime3 = @OLE('ORProjectData.xlsx','SetTime3');
+SetCapacity3 = @OLE('ORProjectData.xlsx','SetCapacity3');
+SetCapacity2 = @OLE('ORProjectData.xlsx','SetCapacity2');
+SetCapacity1 = @OLE('ORProjectData.xlsx','SetCapacity1');
+TucsonLaborTime = @OLE('ORProjectData.xlsx','TucsonLaborTime');
+TucsonMachineTime = @OLE('ORProjectData.xlsx','TucsonMachineTime');
+TucsonAdvertisingCost = @OLE('ORProjectData.xlsx','TucsonAdvertisingCost');
+GlendaleLaborTime = @OLE('ORProjectData.xlsx','GlendaleLaborTime');
+GlendaleMachineTime = @OLE('ORProjectData.xlsx','GlendaleMachineTime');
+GlendaleAdvertisingCost = @OLE('ORProjectData.xlsx','GlendaleAdvertisingCost');
+ChandlerLaborTime = @OLE('ORProjectData.xlsx','ChandlerLaborTime');
+ChandlerMachineTime = @OLE('ORProjectData.xlsx','ChandlerMachineTime');
+ChandlerAdvertisingCost = @OLE('ORProjectData.xlsx','ChandlerAdvertisingCost');
+SetExpensesChandler = @OLE('ORProjectData.xlsx','SetExpensesChandler');
+SetExpensesGlendale = @OLE('ORProjectData.xlsx','SetExpensesGlendale');
+SetExpensesTucson = @OLE('ORProjectData.xlsx','SetExpensesTucson');
+SetRevenueChandler = @OLE('ORProjectData.xlsx','SetRevenueChandler');
+SetRevenueGlendale = @OLE('ORProjectData.xlsx','SetRevenueGlendale');
+SetRevenueTucson = @OLE('ORProjectData.xlsx','SetRevenueTucson');
+SetMinProductChandler = @OLE('ORProjectData.xlsx','SetMinProductChandler');
+SetMinProductGlendale = @OLE('ORProjectData.xlsx','SetMinProductGlendale');
+SetMinProductTucson = @OLE('ORProjectData.xlsx','SetMinProductTucson');
+SetMaxProductChandler = @OLE('ORProjectData.xlsx','SetMaxProductChandler');
+SetMaxProductGlendale = @OLE('ORProjectData.xlsx','SetMaxProductGlendale');
+SetMaxProductTucson = @OLE('ORProjectData.xlsx','SetMaxProductTucson');
+ExpensesChandlerM2 = @OLE('ORProjectData.xlsx','ExpensesChandlerM2');
+ExpensesGlendaleM2 = @OLE('ORProjectData.xlsx','ExpensesGlendaleM2');
+ExpensesTucsonM2 = @OLE('ORProjectData.xlsx','ExpensesTucsonM2');
+SetExpensesChandlerM2 = @OLE('ORProjectData.xlsx','SetExpensesChandlerM2');
+SetExpensesGlendaleM2 = @OLE('ORProjectData.xlsx','SetExpensesGlendaleM2');
+SetExpensesTucsonM2 = @OLE('ORProjectData.xlsx','SetExpensesTucsonM2');
+GraphiteCap = @OLE('ORProjectData.xlsx','GraphiteCap');
+SetGraphiteCap = @OLE('ORProjectData.xlsx','SetGraphiteCap');
+SetLaborTimeTucson = @OLE('ORProjectData.xlsx','SetLaborTimeTucson');
+SetMachineTimeTucson = @OLE('ORProjectData.xlsx','SetMachineTimeTucson');
+SetLaborTimeGlendale = @OLE('ORProjectData.xlsx','SetLaborTimeGlendale');
+SetMachineTimeGlendale = @OLE('ORProjectData.xlsx','SetMachineTimeGlendale');
+SetLaborTimeChandler = @OLE('ORProjectData.xlsx','SetLaborTimeChandler');
+SetMachineTimeChandler = @OLE('ORProjectData.xlsx','SetMachineTimeChandler');
+
+ENDDATA
+
+
+	
+!sums revenue of each location for month 1 followed by expenses of each location. Then set revenue - set expenses for month 1. Then repeats everything for month 2. the second line accounts for inventory cost;
+
+MAX = @SUM(Links1:RevenueChandler*c)+@SUM(Links2:RevenueGlendale*g)+@SUM(Links3:RevenueTucson*t)-@SUM(Links1:ExpensesChandler*c)-@SUM(Links2:ExpensesGlendale*g)-@SUM(Links3:ExpensesTucson*t)+@SUM(Links4:SetRevenueChandler*cc)+@SUM(Links5:SetRevenueGlendale*gg)+@SUM(Links6:SetRevenueTucson*tt)-@SUM(Links4:SetExpensesChandler*cc)-@SUM(Links5:SetExpensesGlendale*gg)-@SUM(Links6:SetExpensesTucson*tt)+@SUM(Links1:RevenueChandler*c2)+@SUM(Links2:RevenueGlendale*g2)+@SUM(Links3:RevenueTucson*t2)-@SUM(Links1:ExpensesChandlerM2*c2)-@SUM(Links2:ExpensesGlendaleM2*g2)-@SUM(Links3:ExpensesTucsonM2*t2)+@SUM(Links4:SetRevenueChandler*cc2)+@SUM(Links5:SetRevenueGlendale*gg2)+@SUM(Links6:SetRevenueTucson*tt2)-@SUM(Links4:SetExpensesChandlerM2*cc2)-@SUM(Links5:SetExpensesGlendaleM2*gg2)-@SUM(Links6:SetExpensesTucsonM2*tt2)
+-@sum(Links1:ExpensesChandler*cinv*.08)-@sum(Links2:ExpensesGlendale*ginv*.08)-@sum(Links3:ExpensesTucson*tinv*.08);
+
+
+
+
+
+!activate demand variable and inventory variable;
+!inv is production - demand/consumption;
+@for( product(k): @sum(Loc1(i): c(i,k)-CD(i,k))=cinv(1,k));
+!consumption is greater than min demand constraints;
+@for( product(k): @sum(Loc1(i): CD(i,k)) >= MinDemandChandler(k));
+!consumption is less than max demand;
+@for( product(k): @sum(Loc1(i):CD(i,k)) <= MaxDemandChandler(k));
+!consumption must be less than what was produced;
+@for( product(k): @sum(Loc1(i):CD(i,k)) <= C(1,k));
+
+!repeat for glendale and tucson;
+@for( product(k): @sum(Loc2(i): g(i,k)-gD(i,k))=ginv(1,k));
+@for( product(k): @sum(Loc2(i):gD(i,k)) >= MinDemandGlendale(k));
+@for( product(k): @sum(Loc2(i):gD(i,k)) <= MaxDemandGlendale(k));
+@for( product(k): @sum(Loc2(i):gD(i,k)) <= g(1,k));
+
+@for( product(k): @sum(Loc3(i): t(i,k)-tD(i,k))=tinv(1,k));
+@for( product(k): @sum(Loc3(i): tD(i,k)) >= MinDemandTucson(k));
+@for( product(k): @sum(Loc3(i): tD(i,k)) <= MaxDemandTucson(k));
+@for( product(k): @sum(Loc3(i): tD(i,k)) <= t(1,k));
+
+
+!never produce more than you can sell;
+@FOR(product(k): @SUM(Loc1(i):c(i,k))+@sum(Loc1(i):C2(i,k))<=MaxDemandChandler(k)*2);
+@FOR(product(k): @SUM(Loc2(i):g(i,k))+@sum(Loc2(i):g2(i,k))<=MaxDemandGlendale(k)*2);
+@FOR(product(k): @SUM(Loc3(i):t(i,k))+@sum(Loc3(i):t2(i,k))<=MaxDemandTucson(k)*2);
+!set;
+@FOR(set(k): @SUM(Loc1(i):cc(i,k))+@sum(Loc1(i):CC2(i,k))<=SetMaxProductChandler(k)*2);
+@FOR(set(k): @SUM(Loc2(i):gg(i,k))+@sum(Loc2(i):GG2(i,k))<=SetMaxProductGlendale(k)*2);
+@FOR(set(k): @SUM(Loc3(i):tt(i,k))+@sum(Loc3(i):TT2(i,k))<=SetMaxProductTucson(k)*2);
+!month 2 cant exceed demand for month two;
+@FOR(product(k): @SUM(Loc1(i):c2(i,k))<=maxDemandChandler(k));
+@FOR(product(k): @SUM(Loc2(i):g2(i,k))<=maxDemandGlendale(k));
+@FOR(product(k): @SUM(Loc3(i):t2(i,k))<=maxDemandTucson(k));
+!set;
+@FOR(set(k): @sum(Loc1(i):CC2(i,k))<=SetMaxProductChandler(k));
+@FOR(set(k): @sum(Loc2(i):GG2(i,k))<=SetMaxProductGlendale(k));
+@FOR(set(k): @sum(Loc3(i):TT2(i,k))<=SetMaxProductTucson(k));
+!meet min production month 1;
+@FOR(product(k): @SUM(Loc1(i):c(i,k))>=MinDemandChandler(k));
+@FOR(product(k): @SUM(Loc2(i):g(i,k))>=MinDemandGlendale(k));
+@FOR(product(k): @SUM(Loc3(i):t(i,k))>=MinDemandTucson(k));
+!set month 1;
+@FOR(set(k): @SUM(Loc1(i):cc(i,k))>=SetMinProductChandler(k));
+@FOR(set(k): @SUM(Loc2(i):gg(i,k))>=SetMinProductGlendale(k));
+@FOR(set(k): @SUM(Loc3(i):tt(i,k))>=SetMinProductTucson(k));
+!meet min production for month 2 taking into account inv;
+@FOR(product(k): @SUM(Loc1(i):c2(i,k))+@SUM(Loc1(i):cinv(i,k))>=MinDemandChandler(k));
+@FOR(product(k): @SUM(Loc2(i):g2(i,k))+@SUM(Loc2(i):ginv(i,k))>=MinDemandGlendale(k));
+@FOR(product(k): @SUM(Loc3(i):t2(i,k))+@SUM(Loc3(i):tinv(i,k))>=MinDemandTucson(k));
+
+
+!set time restrictions;
+@SUM(Links4:cc*65)<=5500;
+@SUM(Links5:gg*60)<=5000;
+@SUM(Links6:tt*65)<=6000;
+@SUM(Links4:cc2*65)<=5500;
+@SUM(Links5:gg2*65)<=5000;
+@SUM(Links6:tt2*65)<=6000;
+
+!labor time constraint;
+@sum(links1:c*ChandlerLaborTime)+@sum(links4:cc*SetLaborTimeChandler)<=12000;
+@sum(links2:g*GlendaleLaborTime)+@sum(links5:gg*SetLaborTimeGlendale)<=15000;
+@sum(links3:t*TucsonLaborTime)+@sum(links6:tt*SetLaborTimeTucson)<=22000;
+@sum(links1:c2*ChandlerLaborTime)+@sum(links4:cc2*SetLaborTimeChandler)<=12000;
+@sum(links2:g2*GlendaleLaborTime)+@sum(links5:gg2*SetLaborTimeGlendale)<=15000;
+@sum(links3:t2*TucsonLaborTime)+@sum(links6:tt2*SetLaborTimeTucson)<=22000;
+!machine time;
+@sum(links4:cc*SetMachineTimeChandler)+@sum(links1:c*ChandlerMachineTime)<=20000;
+@sum(links5:gg*SetMachineTimeGlendale)+@sum(links2:g*GlendaleMachineTime)<=40000;
+@sum(links6:tt*SetMachineTimeTucson)+@sum(links3:t*TucsonMachineTime)<=35000;
+@sum(links4:cc2*SetMachineTimeChandler)+@sum(links1:c2*ChandlerMachineTime)<=20000;
+@sum(links5:gg2*SetMachineTimeGlendale)+@sum(links2:g2*GlendaleMachineTime)<=40000;
+@sum(links6:tt2*SetMachineTimeTucson)+@sum(links3:t2*TucsonMachineTime)<=35000;
+
+!advertising constraints;
+@SUM(Links1:ChandlerAdvertisingCost*c)+@SUM(Links2:GlendaleAdvertisingCost*g)+@SUM(Links3:TucsonAdvertisingCost*t)<=20000;
+@SUM(Links1:ChandlerAdvertisingCost*c2)+@SUM(Links2:GlendaleAdvertisingCost*g2)+@SUM(Links3:TucsonAdvertisingCost*t2)<=20000;
+!graphite constraints 16oz in a lb;
+@sum(Links1:GraphiteCap*c)+@sum(Links2:GraphiteCap*g)+@sum(Links3:GraphiteCap*t)+@SUM(Links4:cc*SetGraphiteCap)+@SUM(Links5:gg*SetGraphiteCap)+@SUM(Links6:tt*SetGraphiteCap)<=1000*16;
+@sum(Links1:GraphiteCap*c2)+@sum(Links2:GraphiteCap*g2)+@sum(Links3:GraphiteCap*t2)+@SUM(Links4:cc2*SetGraphiteCap)+@SUM(Links5:gg2*SetGraphiteCap)+@SUM(Links6:tt2*SetGraphiteCap)<=1000*16;
+
+
+CALC:
+@SOLVE();
+@FOR(LINKS1(I,K): @IFC(c(I,K) #GT# 0: @WRITE('produce ', c(I,K), ' product ' , product(k), ' from location Chandler ',  ' in month 1' , @NEWLINE(1))));
+@FOR(LINKS1(I,K): @IFC(c2(I,K) #GT# 0: @WRITE('produce ', c2(I,K), ' product ' , product(k), ' from location Chandler ', ' in month 2' , @NEWLINE(1))));
+@FOR(LINKS1(I,K): @IFC(cinv(I,K) #GT# 0: @WRITE('inventory lefover from month 1 includes ', cinv(I,K), ' product ' , product(k), ' from location Chandler ',  @NEWLINE(1))));
+@FOR(LINKS2(I,K): @IFC(g(I,K) #GT# 0: @WRITE('produce ', g(I,K), ' product ' , product(k), ' from location Glendale ',  ' in month 1' , @NEWLINE(1))));
+@FOR(LINKS2(I,K): @IFC(g2(I,K) #GT# 0: @WRITE('produce ', g2(I,K), ' product ' , product(k), ' from location Glendale  ', ' in month 2' , @NEWLINE(1))));
+@FOR(LINKS2(I,K): @IFC(ginv(I,K) #GT# 0: @WRITE('inventory lefover from month 1 includes ', ginv(I,K), ' product ' , product(k), ' from location Glendale ',  @NEWLINE(1))));
+@FOR(LINKS3(I,K): @IFC(t(I,K) #GT# 0: @WRITE('produce ', t(I,K), ' product ' , product(k), ' from location Tucson', ' in month 1' , @NEWLINE(1))));
+@FOR(LINKS3(I,K): @IFC(t2(I,K) #GT# 0: @WRITE('produce ', t2(I,K), ' product ' , product(k), ' from location Tucson', ' in month 2' , @NEWLINE(1))));
+@FOR(LINKS3(I,K): @IFC(tinv(I,K) #GT# 0: @WRITE('inventory lefover from month 1 includes ', tinv(I,K), ' product ' , product(k), ' from location Tucson',  @NEWLINE(1))));
+@FOR(LINKS4(I,K): @IFC(cc(I,K) #GT# 0: @WRITE('produce ', cc(I,K), ' set ' , set(k), ' from location Chandler', ' in month 1' , @NEWLINE(1))));
+@FOR(LINKS4(I,K): @IFC(cc2(I,K) #GT# 0: @WRITE('produce ', cc2(I,K), ' set ' , set(k), ' from location Chandler', ' in month 2' , @NEWLINE(1))));
+@FOR(LINKS5(I,K): @IFC(gg(I,K) #GT# 0: @WRITE('produce ', gg(I,K), ' set ' , set(k), ' from location Glendale', ' in month 1' , @NEWLINE(1))));
+@FOR(LINKS5(I,K): @IFC(gg2(I,K) #GT# 0: @WRITE('produce ', gg2(I,K), ' set ' , set(k), ' from location Glendale', ' in month 2' , @NEWLINE(1))));
+@FOR(LINKS6(I,K): @IFC(tt(I,K) #GT# 0: @WRITE('produce ', tt(I,K), ' set ' , set(k), ' from location Tucson', ' in month 1' , @NEWLINE(1))));
+@FOR(LINKS6(I,K): @IFC(tt2(I,K) #GT# 0: @WRITE('produce ', tt2(I,K), ' set ' , set(k), ' from location Tucson', ' in month 2' , @NEWLINE(1))));
+
+ENDCALC
+
